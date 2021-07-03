@@ -1,0 +1,367 @@
+import React, { useEffect, useContext, useState } from "react";
+import { fabric } from "fabric";
+import { CanvasContext } from "../includes/CanvasContext";
+import { ChromePicker } from "react-color";
+const Text = (props) => {
+  const canvasContext = useContext(CanvasContext);
+  const canvas = canvasContext.canvas;
+  const [stroke, setStroke] = useState(1);
+  const [fontSize, setFontSize] = useState(1);
+  const [lineHeight, setLineHeight] = useState(1);
+  const [bold, setBold] = useState(false);
+  const [italic, setItalic] = useState(false);
+  const [underline, setUnderline] = useState(false);
+  const [linethrough, setLinethrough] = useState(false);
+  const [overline, setOverline] = useState(false);
+  const [background, setBackground] = useState("#fff");
+  const initText = () => {
+    var text = new fabric.Textbox("hello world", {
+      editable: true,
+      left: 50,
+      top: 50,
+      fontFamily: "arial black",
+      fontWeight: "",
+      stroke: "",
+    });
+    canvas.add(text).setActiveObject(text);
+    canvas.centerObject(text);
+    canvas.renderAll();
+  };
+  useEffect(() => {
+    initText();
+  }, []);
+
+  // console.log(color.hex);
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Delete") {
+      canvas.remove(canvas.getActiveObject());
+    }
+  });
+
+  const simple = (c, e) => {
+    setBackground(c.hex);
+    console.log(c.hex);
+  };
+
+  const changeFontColor = (e) => {
+    console.log(e.hex);
+    // setColor();
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ fill: e.hex });
+    } else {
+      textLayer.set({ fill: e.hex });
+    }
+    canvas.renderAll();
+  };
+
+  const changeFontFamily = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ fontFamily: e.target.value });
+    } else {
+      textLayer.set({ fontFamily: e.target.value });
+    }
+    canvas.renderAll();
+  };
+
+  const changeFontAlignment = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ textAlign: e.target.value });
+    } else {
+      textLayer.set({ textAlign: e.target.value });
+    }
+    canvas.renderAll();
+  };
+
+  const changeBackgroundColor = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ backgroundColor: e.target.value });
+    } else {
+      textLayer.set({ backgroundColor: e.target.value });
+    }
+    canvas.renderAll();
+  };
+
+  const changeBackgroundTextColor = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ textBackgroundColor: e.target.value });
+    } else {
+      textLayer.set({ textBackgroundColor: e.target.value });
+    }
+    canvas.renderAll();
+  };
+
+  const changeStrokeColor = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ stroke: e.target.value });
+    } else {
+      textLayer.set({ stroke: e.target.value });
+    }
+    canvas.renderAll();
+  };
+
+  const changeStrokeWidth = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ strokeWidth: Number(e.target.value) });
+    } else {
+      textLayer.set({ strokeWidth: Number(e.target.value) });
+    }
+    canvas.renderAll();
+  };
+
+  const changeFontSize = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ fontSize: Number(e.target.value) });
+    } else {
+      textLayer.set({ fontSize: Number(e.target.value) });
+    }
+    canvas.renderAll();
+  };
+
+  const changeLineHeight = (e) => {
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ lineHeight: Number(e.target.value) });
+    } else {
+      textLayer.set({ lineHeight: Number(e.target.value) });
+    }
+    canvas.renderAll();
+  };
+
+  const changeItalic = () => {
+    setItalic(!italic);
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ fontStyle: !italic ? "italic" : "" });
+    } else {
+      textLayer.set({ fontStyle: !italic ? "italic" : "" });
+    }
+    canvas.renderAll();
+  };
+
+  const changeBold = () => {
+    setBold(!bold);
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({ fontWeight: !bold ? "bold" : "" });
+    } else {
+      textLayer.set({ fontWeight: !bold ? "bold" : "" });
+    }
+    canvas.renderAll();
+  };
+
+  const changeUnderline = () => {
+    setUnderline(!underline);
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({
+        underline: !underline,
+      });
+    } else {
+      textLayer.set({ underline: !underline });
+    }
+    canvas.renderAll();
+  };
+
+  const changeLinethrough = () => {
+    setLinethrough(!linethrough);
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({
+        linethrough: !linethrough,
+      });
+    } else {
+      textLayer.set({ linethrough: !linethrough });
+    }
+    canvas.renderAll();
+  };
+
+  const changeOverline = () => {
+    setOverline(!overline);
+    const textLayer = canvas.getActiveObject();
+    if (textLayer.isEditing) {
+      textLayer.setSelectionStyles({
+        overline: !overline,
+      });
+    } else {
+      textLayer.set({ overline: !overline });
+    }
+    canvas.renderAll();
+  };
+  return (
+    <>
+      <div>
+        <div>
+          <img
+            onClick={() => {
+              initText();
+            }}
+            src="https://img.icons8.com/ios-filled/30/000000/add-text.png"
+          />
+        </div>
+        <div>
+          <img src="https://img.icons8.com/plumpy/24/000000/text-color.png" />
+          <ChromePicker
+            disableAlpha={false}
+            color={background}
+            onChange={(c, e) => {
+              simple(c, e);
+            }}
+          />
+          <input type="color" onChange={(e) => changeFontColor(e)} />
+        </div>
+
+        <label for="font-family">Font family:</label>
+        <select
+          id="font-family"
+          onChange={(e) => {
+            changeFontFamily(e);
+          }}
+        >
+          <option value="arial">Arial</option>
+          <option value="helvetica" selected>
+            Helvetica
+          </option>
+          <option value="myriad pro">Myriad Pro</option>
+          <option value="delicious">Delicious</option>
+          <option value="verdana">Verdana</option>
+          <option value="georgia">Georgia</option>
+          <option value="courier">Courier</option>
+          <option value="comic sans ms">Comic Sans MS</option>
+          <option value="impact">Impact</option>
+          <option value="monaco">Monaco</option>
+          <option value="optima">Optima</option>
+          <option value="hoefler text">Hoefler Text</option>
+          <option value="plaster">Plaster</option>
+          <option value="engagement">Engagement</option>
+        </select>
+
+        <span>Text align</span>
+        <select
+          id="text-align"
+          onChange={(e) => {
+            changeFontAlignment(e);
+          }}
+        >
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+          <option value="justify">Justify</option>
+        </select>
+
+        <span>Background Color</span>
+        <input type="color" onChange={(e) => changeBackgroundColor(e)} />
+
+        <span>Background Text Color</span>
+        <input type="color" onChange={(e) => changeBackgroundTextColor(e)} />
+
+        <span for="text-stroke-width">Stroke width:</span>
+        <input
+          type="range"
+          min="1"
+          max="5"
+          onChange={(e) => {
+            setStroke(e.target.value);
+            changeStrokeWidth(e);
+          }}
+          value={stroke}
+        />
+
+        <span>Stroke color</span>
+        <input
+          type="color"
+          onChange={(e) => {
+            changeStrokeColor(e);
+          }}
+        />
+
+        <span for="text-font-size">Font size:</span>
+        <input
+          type="range"
+          value={fontSize}
+          min="1"
+          max="120"
+          step="1"
+          id="text-font-size"
+          onChange={(e) => {
+            setFontSize(e.target.value);
+            changeFontSize(e);
+          }}
+        />
+        <span>Line Height</span>
+        <input
+          type="range"
+          value={lineHeight}
+          min="0"
+          max="10"
+          step="0.1"
+          id="text-line-height"
+          onChange={(e) => {
+            setLineHeight(e.target.value);
+            changeLineHeight(e);
+          }}
+        />
+
+        <button
+          onClick={() => {
+            changeBold();
+          }}
+        >
+          bold
+        </button>
+        <button
+          onClick={() => {
+            changeItalic();
+          }}
+        >
+          italic
+        </button>
+        <button
+          onClick={() => {
+            changeUnderline();
+          }}
+        >
+          underline
+        </button>
+        <button
+          onClick={() => {
+            changeLinethrough();
+          }}
+        >
+          linethrough
+        </button>
+        <button
+          onClick={() => {
+            changeOverline();
+          }}
+        >
+          overline
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Text;
+
+// color
+// font family
+// background color
+// backgrouund text color
+// stroke color
+// stroke width -slider
+// font sise  -slider
+// line hight - slider
+// bold - toggle
+// italic - toggle
+// underline -toggle
+// linethrough -toggle
+// overline - toggle
+// shadow
