@@ -1,369 +1,571 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { fabric } from "fabric";
 import { CanvasContext } from "../includes/CanvasContext";
 import { ChromePicker } from "react-color";
 const Text = (props) => {
-  const canvasContext = useContext(CanvasContext);
-  const canvas = canvasContext.canvas;
-  const [stroke, setStroke] = useState(1);
-  const [fontSize, setFontSize] = useState(1);
-  const [lineHeight, setLineHeight] = useState(1);
-  const [bold, setBold] = useState(false);
-  const [italic, setItalic] = useState(false);
-  const [underline, setUnderline] = useState(false);
-  const [linethrough, setLinethrough] = useState(false);
-  const [overline, setOverline] = useState(false);
-  const [background, setBackground] = useState("#fff");
+   const canvasContext = useContext(CanvasContext);
+   const canvas = canvasContext.canvas;
+   const [stroke, setStroke] = useState(1);
+   const [fontSize, setFontSize] = useState(12);
+   const [lineHeight, setLineHeight] = useState(1);
+   const [bold, setBold] = useState(false);
+   const [italic, setItalic] = useState(false);
+   const [underline, setUnderline] = useState(false);
+   const [linethrough, setLinethrough] = useState(false);
+   const [overline, setOverline] = useState(false);
+   const [background, setBackground] = useState("#fff");
+   const [isDialog, setIsDialog] = useState(false);
+   const [isTypo, setIsTypo] = useState(false);
+   const [isColor, setIsColor] = useState(false);
+   const [fontFamily, setFontFamily] = useState("Arial");
+   const colorRef = useRef();
+   //alignment states
+   const [alRight, setAlRight] = useState(false);
+   const [alJustify, setJustify] = useState(false);
+   const [alCenter, setCenter] = useState(false);
+   const [alLeft, setLeft] = useState(false);
 
-  const [alRight, setAlRight] = useState(false);
-  const [alJustify, setJustify] = useState(false);
-  const [alCenter, setCenter] = useState(false);
-  const [alLeft, setLeft] = useState(false);
-
-  const initText = () => {
-    var text = new fabric.Textbox("hello world", {
-      editable: true,
-      left: 50,
-      top: 50,
-      fontFamily: "arial black",
-      fontWeight: "",
-      stroke: "",
-    });
-    canvas.add(text).setActiveObject(text);
-    canvas.centerObject(text);
-    canvas.renderAll();
-  };
-  useEffect(() => {
-    initText();
-  }, []);
-
-  // console.log(color.hex);
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Delete") {
-      canvas.remove(canvas.getActiveObject());
-    }
-  });
-
-  const simple = (c, e) => {
-    setBackground(c.hex);
-    console.log(c.hex);
-  };
-
-  //text alignments*************************************
-  const changeAlignmentRight = () => {
-    setAlRight(!alRight);
-    setJustify(false);
-    setCenter(false);
-    setLeft(false);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textAlign: !alRight ? "right" : "" });
-    } else {
-      textLayer.set({ textAlign: !alRight ? "right" : "" });
-    }
-    canvas.renderAll();
-  };
-
-  const changeAlignmentJustify = () => {
-    setAlRight(false);
-    setJustify(!alJustify);
-    setCenter(false);
-    setLeft(false);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textAlign: !alJustify ? "justify" : "" });
-    } else {
-      textLayer.set({ textAlign: !alJustify ? "justify" : "" });
-    }
-    canvas.renderAll();
-  };
-
-  const changeAlignmentCenter = () => {
-    setAlRight(false);
-    setJustify(false);
-    setCenter(!alCenter);
-    setLeft(false);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textAlign: !alCenter ? "center" : "" });
-    } else {
-      textLayer.set({ textAlign: !alCenter ? "center" : "" });
-    }
-    canvas.renderAll();
-  };
-
-  const changeAlignmentLeft = () => {
-    setAlRight(false);
-    setJustify(false);
-    setCenter(false);
-    setLeft(!alLeft);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textAlign: !alLeft ? "left" : "" });
-    } else {
-      textLayer.set({ textAlign: !alLeft ? "left" : "" });
-    }
-    canvas.renderAll();
-  };
-  //end text alignments**********************************
-
-  const changeFontColor = (e) => {
-    console.log(e.hex);
-    // setColor();
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ fill: e.hex });
-    } else {
-      textLayer.set({ fill: e.hex });
-    }
-    canvas.renderAll();
-  };
-
-  const changeFontFamily = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ fontFamily: e.target.value });
-    } else {
-      textLayer.set({ fontFamily: e.target.value });
-    }
-    canvas.renderAll();
-  };
-
-  const changeFontAlignment = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textAlign: e.target.value });
-    } else {
-      textLayer.set({ textAlign: e.target.value });
-    }
-    canvas.renderAll();
-  };
-
-  const changeBackgroundColor = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ backgroundColor: e.target.value });
-    } else {
-      textLayer.set({ backgroundColor: e.target.value });
-    }
-    canvas.renderAll();
-  };
-
-  const changeBackgroundTextColor = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ textBackgroundColor: e.target.value });
-    } else {
-      textLayer.set({ textBackgroundColor: e.target.value });
-    }
-    canvas.renderAll();
-  };
-
-  const changeStrokeColor = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ stroke: e.target.value });
-    } else {
-      textLayer.set({ stroke: e.target.value });
-    }
-    canvas.renderAll();
-  };
-
-  const changeStrokeWidth = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ strokeWidth: Number(e.target.value) });
-    } else {
-      textLayer.set({ strokeWidth: Number(e.target.value) });
-    }
-    canvas.renderAll();
-  };
-
-  const changeFontSize = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ fontSize: Number(e.target.value) });
-    } else {
-      textLayer.set({ fontSize: Number(e.target.value) });
-    }
-    canvas.renderAll();
-  };
-
-  const changeLineHeight = (e) => {
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ lineHeight: Number(e.target.value) });
-    } else {
-      textLayer.set({ lineHeight: Number(e.target.value) });
-    }
-    canvas.renderAll();
-  };
-
-  const changeItalic = () => {
-    setItalic(!italic);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ fontStyle: !italic ? "italic" : "" });
-    } else {
-      textLayer.set({ fontStyle: !italic ? "italic" : "" });
-    }
-    canvas.renderAll();
-  };
-
-  const changeBold = () => {
-    setBold(!bold);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({ fontWeight: !bold ? "bold" : "" });
-    } else {
-      textLayer.set({ fontWeight: !bold ? "bold" : "" });
-    }
-    canvas.renderAll();
-  };
-
-  const changeUnderline = () => {
-    setUnderline(!underline);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({
-        underline: !underline,
+   const initText = () => {
+      var text = new fabric.Textbox("hello world", {
+         editable: true,
+         left: 50,
+         top: 50,
+         fontSize: 12,
+         fontFamily: "arial black",
+         fontWeight: "",
+         // stroke: "black",
       });
-    } else {
-      textLayer.set({ underline: !underline });
-    }
-    canvas.renderAll();
-  };
+      canvas.add(text).setActiveObject(text);
+      canvas.centerObject(text);
+      canvas.renderAll();
+   };
+   useEffect(() => {
+      initText();
+   }, []);
+   //global delete key
+   window.addEventListener("keydown", (e) => {
+      if (e.key === "Delete") {
+         canvas.remove(canvas.getActiveObject());
+      }
+   });
 
-  const changeLinethrough = () => {
-    setLinethrough(!linethrough);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({
-        linethrough: !linethrough,
-      });
-    } else {
-      textLayer.set({ linethrough: !linethrough });
-    }
-    canvas.renderAll();
-  };
+   //alignment array
+   const alignmentItems = [
+      {
+         state: alRight,
+         class: "icons icons-alight-right",
+         activeClass: "icons icons-active icons-alight-right",
+         icon: "fal fa-align-right",
+         action: changeAlignment,
+         value: "right",
+      },
+      {
+         state: alJustify,
+         class: "icons icons-alight-justify",
+         activeClass: "icons icons-active icons-alight-justify",
+         icon: "fal fa-align-justify",
+         action: changeAlignment,
+         value: "justify",
+      },
+      {
+         state: alCenter,
+         class: "icons icons-alight-center",
+         activeClass: "icons icons-active icons-alight-center",
+         icon: "fal fa-align-center",
+         action: changeAlignment,
+         value: "center",
+      },
+      {
+         state: alLeft,
+         class: "icons icons-alight-left",
+         activeClass: "icons icons-active icons-alight-left",
+         icon: "fal fa-align-left",
+         action: changeAlignment,
+         value: "left",
+      },
+   ];
+   //function to change alignment of text (right,center,justify and right)
+   function changeAlignment(state, value) {
+      setAlRight(value === "right" ? !state : false);
+      setJustify(value === "justify" ? !state : false);
+      setCenter(value === "center" ? !state : false);
+      setLeft(value === "left" ? !state : false);
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ textAlign: !state ? value : "" });
+      } else {
+         textLayer.set({ textAlign: !state ? value : "" });
+      }
+      canvas.renderAll();
+   }
 
-  const changeOverline = () => {
-    setOverline(!overline);
-    const textLayer = canvas.getActiveObject();
-    if (textLayer.isEditing) {
-      textLayer.setSelectionStyles({
-        overline: !overline,
-      });
-    } else {
-      textLayer.set({ overline: !overline });
-    }
-    canvas.renderAll();
-  };
-  return (
-    <>
-      <div className="icon-container">
-        <div
-          className="icons icons-addText"
-          onClick={() => {
-            initText();
-          }}
-        >
-          <i class="fal fa-text"></i>
-        </div>
-        <div className="icons icons-addColor">
-          <span></span>
-        </div>
-        <div className="icons-fontFamily fontFamily-btn">
-          <span>Ariel</span> <i class="fal fa-chevron-down"></i>
-        </div>
-        <div
-          className={
-            !alRight
-              ? "icons  icons-alight-right"
-              : "icons icons-active icons-alight-right"
-          }
-          onClick={() => {
-            changeAlignmentRight();
-          }}
-        >
-          <i class="fal fa-align-right"></i>
-        </div>
-        <div
-          className={
-            !alJustify
-              ? "icons  icons-alight-justify"
-              : "icons icons-active icons-alight-justify"
-          }
-          onClick={() => {
-            changeAlignmentJustify();
-          }}
-        >
-          <i class="fal fa-align-justify"></i>
-        </div>
-        <div
-          className={
-            !alCenter
-              ? "icons  icons-alight-center"
-              : "icons icons-active icons-alight-center"
-          }
-          onClick={() => {
-            changeAlignmentCenter();
-          }}
-        >
-          <i class="fal fa-align-center"></i>
-        </div>
-        <div
-          className={
-            !alLeft
-              ? "icons  icons-alight-left"
-              : "icons icons-active icons-alight-left"
-          }
-          onClick={() => {
-            changeAlignmentLeft();
-          }}
-        >
-          <i class="fal fa-align-left"></i>
-        </div>
+   //font size and line height controls
+   const fontControlsItems = [
+      {
+         icon: "fal fa-text-size",
+         action: actionHandler,
+         type: "font-size",
+         value: fontSize,
+         change: changeHandler,
+      },
+      {
+         icon: "fal fa-line-height",
+         action: actionHandler,
+         type: "line-height",
+         value: lineHeight,
+         change: changeHandler,
+      },
+   ];
 
-        <div className="icons icons-font-size">
-          <i class="fal fa-text-size"></i>
-        </div>
-        <div className="icons icons-line-height">
-          <i class="fal fa-line-height"></i>
-        </div>
-        <div className="icons icons-bold">
-          <i class="fal fa-bold"></i>
-        </div>
-        <div className="icons icons-italic">
-          <i class="fal fa-italic"></i>
-        </div>
-        <div className="icons icons-underline">
-          <i class="fal fa-underline"></i>
-        </div>
-        <div className="icons icons-linethrough">
-          <i class="fal fa-strikethrough"></i>
-        </div>
-        <div className="icons icons-overline">
-          <i class="fal fa-overline"></i>
-        </div>
-      </div>
-    </>
-  );
+   var fs = fontSize;
+   var lh = lineHeight;
+   //action to increase of decrease font or line height
+   function actionHandler(sym, type) {
+      if (type === "font-size") {
+         if (sym === "minus") {
+            if (fs <= 1) {
+               fs = 1;
+               setFontSize(1);
+            }
+            setFontSize(--fs);
+            const textLayer = canvas.getActiveObject();
+            if (textLayer.isEditing) {
+               textLayer.setSelectionStyles({ fontSize: Number(fontSize) });
+            } else {
+               textLayer.set({ fontSize: Number(fontSize) });
+            }
+            canvas.renderAll();
+         } else if (sym === "plus") {
+            if (fs > 120) {
+               fs = 12;
+               setFontSize(12);
+            }
+            setFontSize(++fs);
+            const textLayer = canvas.getActiveObject();
+            if (textLayer.isEditing) {
+               textLayer.setSelectionStyles({ fontSize: Number(fontSize) });
+            } else {
+               textLayer.set({ fontSize: Number(fontSize) });
+            }
+            canvas.renderAll();
+         }
+      } else if (type === "line-height") {
+         if (sym === "minus") {
+            if (lh <= 1) {
+               lh = 1;
+               setLineHeight(1);
+            }
+            setLineHeight(--lh);
+            const textLayer = canvas.getActiveObject();
+            if (textLayer.isEditing) {
+               textLayer.setSelectionStyles({ lineHeight: Number(lineHeight) });
+            } else {
+               textLayer.set({ lineHeight: Number(lineHeight) });
+            }
+            canvas.renderAll();
+         } else if (sym === "plus") {
+            if (lh >= 4) {
+               lh = 4;
+               setLineHeight(4);
+            }
+            setLineHeight(++lh);
+            const textLayer = canvas.getActiveObject();
+            if (textLayer.isEditing) {
+               textLayer.setSelectionStyles({ lineHeight: Number(lineHeight) });
+            } else {
+               textLayer.set({ lineHeight: Number(lineHeight) });
+            }
+            canvas.renderAll();
+         }
+      }
+   }
+   function changeHandler(e, type) {
+      if (type === "font-size") {
+         setFontSize(e.target.value);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({ fontSize: Number(e.target.value) });
+         } else {
+            textLayer.set({ fontSize: Number(e.target.value) });
+         }
+         canvas.renderAll();
+      } else if (type === "line-height") {
+         setLineHeight(e.target.value);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({
+               lineHeight: Number(e.target.value),
+            });
+         } else {
+            textLayer.set({ lineHeight: Number(e.target.value) });
+         }
+         canvas.renderAll();
+      }
+   }
+
+   const simple = (c, e) => {
+      setBackground(c.hex);
+
+      console.log(c.hex);
+   };
+
+   const changeFontColor = (c, e) => {
+      colorRef.current.style.background = c.hex;
+      setBackground(c.hex);
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ fill: c.hex });
+      } else {
+         textLayer.set({ fill: c.hex });
+      }
+      canvas.renderAll();
+   };
+
+   const changeFontFamily = (e) => {
+      setFontFamily(e.target.value);
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ fontFamily: e.target.value });
+      } else {
+         textLayer.set({ fontFamily: e.target.value });
+      }
+      canvas.renderAll();
+   };
+
+   const changeBackgroundColor = (e) => {
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ backgroundColor: e.target.value });
+      } else {
+         textLayer.set({ backgroundColor: e.target.value });
+      }
+      canvas.renderAll();
+   };
+
+   const changeBackgroundTextColor = (e) => {
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ textBackgroundColor: e.target.value });
+      } else {
+         textLayer.set({ textBackgroundColor: e.target.value });
+      }
+      canvas.renderAll();
+   };
+
+   const changeStrokeColor = (e) => {
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ stroke: e.target.value });
+      } else {
+         textLayer.set({ stroke: e.target.value });
+      }
+      canvas.renderAll();
+   };
+
+   const changeStrokeWidth = (e) => {
+      const textLayer = canvas.getActiveObject();
+      if (textLayer.isEditing) {
+         textLayer.setSelectionStyles({ strokeWidth: Number(e.target.value) });
+      } else {
+         textLayer.set({ strokeWidth: Number(e.target.value) });
+      }
+      canvas.renderAll();
+   };
+
+   //text format items
+   const textFormatItems = [
+      {
+         state: bold,
+         value: "bold",
+         action: changeFormat,
+         icon: "fal fa-bold",
+         class: "icons  icons-alight-bold",
+         classActive: "icons icons-active icons-alight-bold",
+      },
+      {
+         state: italic,
+         value: "italic",
+         action: changeFormat,
+         icon: "fal fa-italic",
+         class: "icons  icons-alight-italic",
+         classActive: "icons icons-active icons-alight-italic",
+      },
+      {
+         state: linethrough,
+         value: "linethrough",
+         action: changeFormat,
+         icon: "fal fa-strikethrough",
+         class: "icons  icons-alight-linethrough",
+         classActive: "icons icons-active icons-alight-linethrough",
+      },
+      {
+         state: underline,
+         value: "underline",
+         action: changeFormat,
+         icon: "fal fa-underline",
+         class: "icons  icons-alight-underline",
+         classActive: "icons icons-active icons-alight-underline",
+      },
+      {
+         state: overline,
+         value: "overline",
+         action: changeFormat,
+         icon: "fal fa-overline",
+         class: "icons  icons-alight-overline",
+         classActive: "icons icons-active icons-alight-overline",
+      },
+   ];
+
+   function changeFormat(state, value) {
+      const textLayer = canvas.getActiveObject();
+      if (value === "italic") {
+         setItalic(!italic);
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({
+               fontStyle: !italic ? "italic" : "",
+            });
+         } else {
+            textLayer.set({ fontStyle: !italic ? "italic" : "" });
+         }
+      } else if (value === "bold") {
+         setBold(!bold);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({ fontWeight: !bold ? "bold" : "" });
+         } else {
+            textLayer.set({ fontWeight: !bold ? "bold" : "" });
+         }
+      } else if (value === "underline") {
+         setUnderline(!underline);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({
+               underline: !underline,
+            });
+         } else {
+            textLayer.set({ underline: !underline });
+         }
+      } else if (value === "linethrough") {
+         setLinethrough(!linethrough);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({
+               linethrough: !linethrough,
+            });
+         } else {
+            textLayer.set({ linethrough: !linethrough });
+         }
+      } else if (value === "overline") {
+         setOverline(!overline);
+         const textLayer = canvas.getActiveObject();
+         if (textLayer.isEditing) {
+            textLayer.setSelectionStyles({
+               overline: !overline,
+            });
+         } else {
+            textLayer.set({ overline: !overline });
+         }
+      }
+      canvas.renderAll();
+   }
+
+   function showTextDialog() {
+      if (isColor) {
+         return (
+            <>
+               <ChromePicker
+                  disableAlpha={false}
+                  color={background}
+                  onChange={(c, e) => {
+                     changeFontColor(c, e);
+                  }}
+               />
+               <div className="stroke-mt">
+                  <span className="stroke-text">Stroke</span>
+                  <hr />
+                  <div className="stroke-container">
+                     <input
+                        type="range"
+                        min="0.1"
+                        max="20"
+                        onChange={(e) => {
+                           setStroke(e.target.value);
+                           changeStrokeWidth(e);
+                        }}
+                        value={stroke}
+                     />
+                     <input
+                        type="color"
+                        onChange={(e) => {
+                           changeStrokeColor(e);
+                        }}
+                     />
+                  </div>
+               </div>
+               <hr></hr>
+               <div className="stroke-container">
+                  <span className="stroke-text">Background color</span>
+                  <input
+                     type="color"
+                     onChange={(e) => changeBackgroundColor(e)}
+                  />
+               </div>
+               <hr></hr>
+               <div className="stroke-container">
+                  <span className="stroke-text">Background Text color</span>
+                  <input
+                     type="color"
+                     onChange={(e) => changeBackgroundTextColor(e)}
+                  />
+               </div>
+            </>
+         );
+      } else if (isTypo) {
+         return (
+            <select
+               id="font-family"
+               onChange={(e) => {
+                  changeFontFamily(e);
+               }}
+            >
+               <option value="arial">Arial</option>
+               <option value="helvetica" selected>
+                  Helvetica
+               </option>
+               <option value="myriad pro">Myriad Pro</option>
+               <option value="delicious">Delicious</option>
+               <option value="verdana">Verdana</option>
+               <option value="georgia">Georgia</option>
+               <option value="courier">Courier</option>
+               <option value="comic sans ms">Comic Sans MS</option>
+               <option value="impact">Impact</option>
+               <option value="monaco">Monaco</option>
+               <option value="optima">Optima</option>
+               <option value="hoefler text">Hoefler Text</option>
+               <option value="plaster">Plaster</option>
+               <option value="engagement">Engagement</option>
+            </select>
+         );
+      }
+   }
+
+   return (
+      <>
+         {isDialog ? (
+            <div className="color-container">{showTextDialog()}</div>
+         ) : (
+            ""
+         )}
+
+         <div className="icon-container">
+            <div
+               className="icons icons-addText"
+               onClick={() => {
+                  initText();
+               }}
+            >
+               <i class="fal fa-text"></i>
+            </div>
+            <div
+               className="icons icons-addColor"
+               ref={colorRef}
+               onClick={() => {
+                  setIsDialog(!isColor);
+                  setIsColor(!isColor);
+                  setIsTypo(false);
+                  showTextDialog("color");
+               }}
+            >
+               <span></span>
+            </div>
+            <div
+               className="icons-fontFamily fontFamily-btn"
+               onClick={() => {
+                  setIsDialog(!isTypo);
+                  setIsColor(false);
+                  setIsTypo(!isTypo);
+                  showTextDialog("typography");
+               }}
+            >
+               <span>{fontFamily}</span> <i class="fal fa-chevron-down"></i>
+            </div>
+
+            {alignmentItems.map((alignItem, i) => (
+               <div
+                  className={
+                     !alignItem.state
+                        ? `${alignItem.class}`
+                        : `${alignItem.activeClass}`
+                  }
+                  onClick={() => {
+                     alignItem.action(alignItem.state, alignItem.value);
+                  }}
+               >
+                  <i class={alignItem.icon}></i>
+               </div>
+            ))}
+            {fontControlsItems.map((fontControlsItem) => (
+               <>
+                  <div className=" controls-btns">
+                     <button
+                        className="controls-btn"
+                        onClick={() =>
+                           fontControlsItem.action(
+                              "minus",
+                              fontControlsItem.type
+                           )
+                        }
+                     >
+                        <i class="fal fa-minus"></i>
+                     </button>
+                     <input
+                        className="controls-input"
+                        type="text"
+                        value={fontControlsItem.value}
+                        onChange={(e) =>
+                           changeHandler(e, fontControlsItem.type)
+                        }
+                     />
+                     <button
+                        className="controls-btn"
+                        onClick={() =>
+                           fontControlsItem.action(
+                              "plus",
+                              fontControlsItem.type
+                           )
+                        }
+                     >
+                        <i class="fal fa-plus"></i>
+                     </button>
+                  </div>
+                  <div className="icons icons-font-size">
+                     <i class={fontControlsItem.icon}></i>
+                  </div>
+               </>
+            ))}
+            {textFormatItems.map((textFormatItem) => (
+               <div
+                  className={
+                     !textFormatItem.state
+                        ? `${textFormatItem.class}`
+                        : `${textFormatItem.classActive}`
+                  }
+                  onClick={() => {
+                     textFormatItem.action(
+                        textFormatItem.state,
+                        textFormatItem.value
+                     );
+                  }}
+               >
+                  <i class={textFormatItem.icon}></i>
+               </div>
+            ))}
+         </div>
+      </>
+   );
 };
-
 export default Text;
 
-// color
-// font family
-// background color
-// backgrouund text color
-// stroke color
-// stroke width -slider
-// font sise  -slider
-// line hight - slider
-// bold - toggle
-// italic - toggle
-// underline -toggle
-// linethrough -toggle
-// overline - toggle
-// shadow
+//shadow
+//letter spacing
+//gradient color and many more
