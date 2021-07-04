@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { CanvasContext } from "../includes/CanvasContext";
 
 const Text = (props) => {
+   // console.log(props);
    const canvasContext = useContext(CanvasContext);
    const buttons = [
       {

@@ -1,9 +1,7 @@
 import React, { useRef, useEffect } from "react";
-
 const Upload = () => {
    var imagesObject = [];
    const imageRef = useRef();
-
    useEffect(() => {
       loadFromLocalStorage();
    }, []);
@@ -47,15 +45,13 @@ const Upload = () => {
          //   displayNumberOfImgs();
          images.forEach(displayImgData);
       }
-      //   console.log(imagesObject);
    }
-
-   //    function deleteImages(){
-   //     imagesObject = [];
-   //     localStorage.removeItem("images");
-   //     displayNumberOfImgs()
-   //     document.getElementById('list').innerHTML = "";
-   //   }
+   function deleteImages() {
+      imagesObject = [];
+      localStorage.removeItem("images");
+      displayNumberOfImgs();
+      document.getElementById("list").innerHTML = "";
+   }
 
    return (
       <>

@@ -1,10 +1,9 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fabric } from "fabric";
-import { CanvasContext } from "../includes/CanvasContext";
+import { useSelector } from "react-redux";
 import { ChromePicker } from "react-color";
 const Text = (props) => {
-   const canvasContext = useContext(CanvasContext);
-   const canvas = canvasContext.canvas;
+   const canvas = useSelector((state) => state.index.canvas);
    const [stroke, setStroke] = useState(1);
    const [fontSize, setFontSize] = useState(12);
    const [lineHeight, setLineHeight] = useState(1);

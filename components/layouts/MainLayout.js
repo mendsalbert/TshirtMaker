@@ -3,7 +3,6 @@ import React, { Component, useState, useEffect } from "react";
 export default class MainLayout extends Component {
    render() {
       return (
-         // <>
          <>
             <link
                href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
