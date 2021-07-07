@@ -40,10 +40,94 @@ const initialState = {
 
 export default function (state = initialState, action) {
    switch (action.type) {
-      case "":
+      case SET_STROKE:
          return {
             ...state,
-            elementToggle: action.state,
+            stroke: action.state,
+         };
+      case SET_FONTSIZE:
+         return {
+            ...state,
+            fontSize: action.state,
+         };
+      case SET_LINE_HEIGHT:
+         return {
+            ...state,
+            lineHeight: action.state,
+         };
+      case SET_LINE_THROUGH:
+         return {
+            ...state,
+            linethrough: action.state,
+         };
+      case SET_BOLD:
+         return {
+            ...state,
+            bold: action.state,
+         };
+      case SET_ITALIC:
+         return {
+            ...state,
+            italic: action.state,
+         };
+      case SET_UNDERLINE:
+         return {
+            ...state,
+            underline: action.state,
+         };
+      case SET_OVERLINE:
+         return {
+            ...state,
+            overline: action.state,
+         };
+      case SET_BACKGROUND:
+         return {
+            ...state,
+            background: action.state,
+         };
+      case SET_IS_DIALOG:
+         return {
+            ...state,
+            isDialog: action.state,
+         };
+      case SET_IS_TYPO:
+         return {
+            ...state,
+            isTypo: action.state,
+         };
+      case SET_IS_COLOR:
+         return {
+            ...state,
+            isColor: action.state,
+         };
+      case SET_FONT_FAMILY:
+         return {
+            ...state,
+            fontFamily: action.state,
+         };
+
+      case SET_ALIGNMENT_CENTER:
+         return {
+            ...state,
+            alCenter: action.state,
+         };
+
+      case SET_ALIGNMENT_JUSTIFY:
+         return {
+            ...state,
+            alJustify: action.state,
+         };
+
+      case SET_ALIGNMENT_RIGHT:
+         return {
+            ...state,
+            alRight: action.state,
+         };
+
+      case SET_ALIGNMENT_LEFT:
+         return {
+            ...state,
+            alLeft: action.state,
          };
       default:
          return state;

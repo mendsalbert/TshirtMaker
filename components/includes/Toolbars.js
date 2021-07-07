@@ -1,13 +1,19 @@
 import React, { useContext, useState } from "react";
 import { CanvasContext } from "../includes/CanvasContext";
-
+import { useSelector, useDispatch } from "react-redux";
+import * as toolActions from "../../store/actions/tool_actions";
 const Toolbars = (props) => {
    const canvasContext = useContext(CanvasContext);
    const canvas = canvasContext.canvas;
-   const [strokeValue, setStrokeValue] = useState("");
-   const [current, setCurrent] = useState("blacK");
+   // const canvas = useSelector((state) => state.index.canvas);
+   // const canvas = useSelector((state) => state.index.canvas);
+   const current = useSelector((state) => state.tool.current);
+   const dispatch = useDispatch();
+   // console.log(canvas);
+   // const [strokeValue, setStrokeValue] = useState("");
+   // const [current, setCurrent] = useState("blacK");
    const changeColor = (e) => {
-      setCurrent(e.target.value);
+      dispatch(toolActions.changeCurrentColor(e));
       canvas.getActiveObject().set("fill", e.target.value);
       canvas.renderAll();
    };
@@ -18,9 +24,6 @@ const Toolbars = (props) => {
    };
 
    const setStroke = (e) => {
-      // setStrokeValue(e.target.value);
-      // console.log(e.target.value);
-      // // console.log(strokeValue);
       canvas.getActiveObject().set({
          strokeWidth: Number(e.target.value),
       });
@@ -28,7 +31,6 @@ const Toolbars = (props) => {
    };
 
    const changeStrokeColor = (e) => {
-      // setCurrent(e.target.value);
       canvas.getActiveObject().set({ stroke: e.target.value });
       canvas.renderAll();
    };
@@ -36,33 +38,48 @@ const Toolbars = (props) => {
    return (
       <>
          <div>
-            <input
+            <div
+               className="icons icons-addColor"
+               // ref={colorRef}
+               onClick={() => {
+                  // dispatch(textActions.setDialogState(!isColor));
+                  // dispatch(textActions.setColorState(!isColor));
+                  // dispatch(textActions.setTypoState(false));
+                  // showTextDialog("color");
+               }}
+            >
+               <span></span>
+            </div>
+            <div>
+               <span>Forma t</span>
+            </div>
+            {/* <input
                id="create-color"
                className="toolbar-styles"
                type="color"
                onChange={(e) => {
                   changeColor(e);
                }}
-            />
+            /> */}
          </div>
 
-         <button onClick={() => stroke()}>Stroke outline</button>
-         <input
+         {/* <button onClick={() => stroke()}>Stroke outline</button> */}
+         {/* <input
             id="create-color"
             className="toolbar-styles"
             type="color"
             onChange={(e) => {
                changeStrokeColor(e);
             }}
-         />
-         <input
+         /> */}
+         {/* <input
             type="range"
             min="1"
             max="10"
             id="text-stroke-width"
             onChange={(e) => setStroke(e)}
             value={strokeValue}
-         />
+         /> */}
       </>
    );
 };

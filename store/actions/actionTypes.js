@@ -28,3 +28,11 @@ export const SET_ALIGNMENT_RIGHT = "SET_ALIGNMENT_RIGHT";
 export const SET_ALIGNMENT_JUSTIFY = "SET_ALIGNMENT_JUSTIFY";
 export const SET_ALIGNMENT_CENTER = "SET_ALIGNMENT_CENTER";
 export const SET_ALIGNMENT_LEFT = "SET_ALIGNMENT_LEFT";
+
+//action types for Tool component
+export const SET_STROKE_VALUE = "SET_STROKE_VALUE";
+export const CHANGE_COLOR = "CHANGE_COLOR";
+export const STROKE = "STROKE";
+export const STROKE_WIDTH = "STROKE_WIDTH";
+export const STROKE_COLOR = "STROKE_COLOR";
+export const SET_CURRENT_COLOR = "SET_CURRENT";

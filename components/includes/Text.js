@@ -1,28 +1,31 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { fabric } from "fabric";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ChromePicker } from "react-color";
-const Text = (props) => {
+import * as textActions from "../../store/actions/text_actions";
+const Text = () => {
+   const dispatch = useDispatch();
    const canvas = useSelector((state) => state.index.canvas);
-   const [stroke, setStroke] = useState(1);
-   const [fontSize, setFontSize] = useState(12);
-   const [lineHeight, setLineHeight] = useState(1);
-   const [bold, setBold] = useState(false);
-   const [italic, setItalic] = useState(false);
-   const [underline, setUnderline] = useState(false);
-   const [linethrough, setLinethrough] = useState(false);
-   const [overline, setOverline] = useState(false);
-   const [background, setBackground] = useState("#fff");
-   const [isDialog, setIsDialog] = useState(false);
-   const [isTypo, setIsTypo] = useState(false);
-   const [isColor, setIsColor] = useState(false);
-   const [fontFamily, setFontFamily] = useState("Arial");
+
+   const stroke = useSelector((state) => state.text.stroke);
+   const fontSize = useSelector((state) => state.text.fontSize);
+   const lineHeight = useSelector((state) => state.text.lineHeight);
+   const bold = useSelector((state) => state.text.bold);
+   const italic = useSelector((state) => state.text.italic);
+   const underline = useSelector((state) => state.text.underline);
+   const linethrough = useSelector((state) => state.text.linethrough);
+   const overline = useSelector((state) => state.text.overline);
+   const background = useSelector((state) => state.text.background);
+   const isDialog = useSelector((state) => state.text.isDialog);
+   const isTypo = useSelector((state) => state.text.isTypo);
+   const isColor = useSelector((state) => state.text.isColor);
+   const fontFamily = useSelector((state) => state.text.fontFamily);
+   const alRight = useSelector((state) => state.text.alRight);
+   const alJustify = useSelector((state) => state.text.alJustify);
+   const alCenter = useSelector((state) => state.text.alCenter);
+   const alLeft = useSelector((state) => state.text.alLeft);
+
    const colorRef = useRef();
-   //alignment states
-   const [alRight, setAlRight] = useState(false);
-   const [alJustify, setJustify] = useState(false);
-   const [alCenter, setCenter] = useState(false);
-   const [alLeft, setLeft] = useState(false);
 
    const initText = () => {
       var text = new fabric.Textbox("hello world", {
@@ -41,6 +44,7 @@ const Text = (props) => {
    useEffect(() => {
       initText();
    }, []);
+
    //global delete key
    window.addEventListener("keydown", (e) => {
       if (e.key === "Delete") {
@@ -85,10 +89,22 @@ const Text = (props) => {
    ];
    //function to change alignment of text (right,center,justify and right)
    function changeAlignment(state, value) {
-      setAlRight(value === "right" ? !state : false);
-      setJustify(value === "justify" ? !state : false);
-      setCenter(value === "center" ? !state : false);
-      setLeft(value === "left" ? !state : false);
+      dispatch(
+         textActions.setAlignmentRightState(value === "right" ? !state : false)
+      );
+      dispatch(
+         textActions.setAlignmentJustifyState(
+            value === "justify" ? !state : false
+         )
+      );
+      dispatch(
+         textActions.setAlignmentCenterState(
+            value === "center" ? !state : false
+         )
+      );
+      dispatch(
+         textActions.setAlignmentLeftState(value === "left" ? !state : false)
+      );
       const textLayer = canvas.getActiveObject();
       if (textLayer.isEditing) {
          textLayer.setSelectionStyles({ textAlign: !state ? value : "" });
@@ -124,9 +140,11 @@ const Text = (props) => {
          if (sym === "minus") {
             if (fs <= 1) {
                fs = 1;
-               setFontSize(1);
+               // setFontSize(1);
+               dispatch(textActions.setFontSizeState(1));
             }
-            setFontSize(--fs);
+            // setFontSize(--fs);
+            dispatch(textActions.setFontSizeState(--fs));
             const textLayer = canvas.getActiveObject();
             if (textLayer.isEditing) {
                textLayer.setSelectionStyles({ fontSize: Number(fontSize) });
@@ -137,9 +155,11 @@ const Text = (props) => {
          } else if (sym === "plus") {
             if (fs > 120) {
                fs = 12;
-               setFontSize(12);
+               // setFontSize(12);
+               dispatch(textActions.setFontSizeState(12));
             }
-            setFontSize(++fs);
+            // setFontSize(++fs);
+            dispatch(textActions.setFontSizeState(++fs));
             const textLayer = canvas.getActiveObject();
             if (textLayer.isEditing) {
                textLayer.setSelectionStyles({ fontSize: Number(fontSize) });
@@ -152,9 +172,11 @@ const Text = (props) => {
          if (sym === "minus") {
             if (lh <= 1) {
                lh = 1;
-               setLineHeight(1);
+               // setLineHeight(1);
+               dispatch(textActions.setLineHeightState(1));
             }
-            setLineHeight(--lh);
+            // setLineHeight(--lh);
+            dispatch(textActions.setLineHeightState(--lh));
             const textLayer = canvas.getActiveObject();
             if (textLayer.isEditing) {
                textLayer.setSelectionStyles({ lineHeight: Number(lineHeight) });
@@ -165,9 +187,11 @@ const Text = (props) => {
          } else if (sym === "plus") {
             if (lh >= 4) {
                lh = 4;
-               setLineHeight(4);
+               // setLineHeight(4);
+               dispatch(textActions.setLineHeightState(4));
             }
-            setLineHeight(++lh);
+            // setLineHeight(++lh);
+            dispatch(textActions.setLineHeightState(++lh));
             const textLayer = canvas.getActiveObject();
             if (textLayer.isEditing) {
                textLayer.setSelectionStyles({ lineHeight: Number(lineHeight) });
@@ -178,9 +202,11 @@ const Text = (props) => {
          }
       }
    }
+
    function changeHandler(e, type) {
       if (type === "font-size") {
-         setFontSize(e.target.value);
+         dispatch(textActions.setFontSizeState(e.target.value));
+         // setFontSize(e.target.value);
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({ fontSize: Number(e.target.value) });
@@ -189,7 +215,8 @@ const Text = (props) => {
          }
          canvas.renderAll();
       } else if (type === "line-height") {
-         setLineHeight(e.target.value);
+         // setLineHeight(e.target.value);
+         dispatch(textActions.setLineHeight(e.target.value));
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({
@@ -203,14 +230,15 @@ const Text = (props) => {
    }
 
    const simple = (c, e) => {
-      setBackground(c.hex);
-
-      console.log(c.hex);
+      dispatch(textActions.setBackgroundState(c.hex));
+      // setBackground(c.hex);
+      // console.log(c.hex);
    };
 
    const changeFontColor = (c, e) => {
       colorRef.current.style.background = c.hex;
-      setBackground(c.hex);
+      dispatch(textActions.setBackgroundState(c.hex));
+      // setBackground(c.hex);
       const textLayer = canvas.getActiveObject();
       if (textLayer.isEditing) {
          textLayer.setSelectionStyles({ fill: c.hex });
@@ -221,7 +249,8 @@ const Text = (props) => {
    };
 
    const changeFontFamily = (e) => {
-      setFontFamily(e.target.value);
+      // setFontFamily(e.target.value);
+      dispatch(textActions.setFontFamilyState(e.target.value));
       const textLayer = canvas.getActiveObject();
       if (textLayer.isEditing) {
          textLayer.setSelectionStyles({ fontFamily: e.target.value });
@@ -318,7 +347,8 @@ const Text = (props) => {
    function changeFormat(state, value) {
       const textLayer = canvas.getActiveObject();
       if (value === "italic") {
-         setItalic(!italic);
+         dispatch(textActions.setItalicState(!italic));
+         // setItalic(!italic);
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({
                fontStyle: !italic ? "italic" : "",
@@ -327,7 +357,8 @@ const Text = (props) => {
             textLayer.set({ fontStyle: !italic ? "italic" : "" });
          }
       } else if (value === "bold") {
-         setBold(!bold);
+         dispatch(textActions.setBoldState(!bold));
+         // setBold(!bold);
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({ fontWeight: !bold ? "bold" : "" });
@@ -335,7 +366,8 @@ const Text = (props) => {
             textLayer.set({ fontWeight: !bold ? "bold" : "" });
          }
       } else if (value === "underline") {
-         setUnderline(!underline);
+         dispatch(textActions.setUnderlineState(!underline));
+         // setUnderline(!underline);
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({
@@ -345,7 +377,9 @@ const Text = (props) => {
             textLayer.set({ underline: !underline });
          }
       } else if (value === "linethrough") {
-         setLinethrough(!linethrough);
+         dispatch(textActions.setLineThroughState(!linethrough));
+         console.log(linethrough);
+         // setLinethrough(!linethrough);
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({
@@ -355,7 +389,8 @@ const Text = (props) => {
             textLayer.set({ linethrough: !linethrough });
          }
       } else if (value === "overline") {
-         setOverline(!overline);
+         dispatch(textActions.setOverlineState(!overline));
+         // setOverline(!overline);
          const textLayer = canvas.getActiveObject();
          if (textLayer.isEditing) {
             textLayer.setSelectionStyles({
@@ -388,7 +423,8 @@ const Text = (props) => {
                         min="0.1"
                         max="20"
                         onChange={(e) => {
-                           setStroke(e.target.value);
+                           dispatch(textActions.setStrokeState(e.target.value));
+                           // setStroke(e.target.value);
                            changeStrokeWidth(e);
                         }}
                         value={stroke}
@@ -469,9 +505,9 @@ const Text = (props) => {
                className="icons icons-addColor"
                ref={colorRef}
                onClick={() => {
-                  setIsDialog(!isColor);
-                  setIsColor(!isColor);
-                  setIsTypo(false);
+                  dispatch(textActions.setDialogState(!isColor));
+                  dispatch(textActions.setColorState(!isColor));
+                  dispatch(textActions.setTypoState(false));
                   showTextDialog("color");
                }}
             >
@@ -480,9 +516,9 @@ const Text = (props) => {
             <div
                className="icons-fontFamily fontFamily-btn"
                onClick={() => {
-                  setIsDialog(!isTypo);
-                  setIsColor(false);
-                  setIsTypo(!isTypo);
+                  dispatch(textActions.setDialogState(!isTypo));
+                  dispatch(textActions.setColorState(false));
+                  dispatch(textActions.setTypoState(!isTypo));
                   showTextDialog("typography");
                }}
             >

@@ -18,130 +18,121 @@ import {
    SET_ALIGNMENT_JUSTIFY,
 } from "./actionTypes";
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setStrokeState = (state) => {
    return {
       type: SET_STROKE,
       state: state,
    };
 };
 
-//set font size on text canvas
-export const setFontSizeHandler = (state) => {
+export const setFontSizeState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_FONTSIZE,
       state: state,
    };
 };
 
-//set line height on text canvas
-export const setLineHeightHandler = (state) => {
+export const setLineHeightState = (state) => {
    return {
       type: SET_LINE_HEIGHT,
       state: state,
    };
 };
 
-//apply bold on text canvas
-export const setStrokeHandler = (state) => {
+export const setLineThroughState = (state) => {
+   return {
+      type: SET_LINE_THROUGH,
+      state: state,
+   };
+};
+
+export const setBoldState = (state) => {
    return {
       type: SET_BOLD,
       state: state,
    };
 };
 
-//apply italic on text canvas
-export const setItalicHandler = (state) => {
+export const setItalicState = (state) => {
    return {
       type: SET_ITALIC,
       state: state,
    };
 };
 
-//apply underline on text canvas
-export const setUnderlineHandler = (state) => {
+export const setUnderlineState = (state) => {
    return {
       type: SET_UNDERLINE,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setOverlineState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_OVERLINE,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setBackgroundState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_BACKGROUND,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setDialogState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_IS_DIALOG,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setTypoState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_IS_TYPO,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setColorState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_IS_COLOR,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setFontFamilyState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_FONT_FAMILY,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setAlignmentCenterState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_ALIGNMENT_CENTER,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setAlignmentRightState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_ALIGNMENT_RIGHT,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setAlignmentLeftState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_ALIGNMENT_LEFT,
       state: state,
    };
 };
 
-//set stroke on text canvas
-export const setStrokeHandler = (state) => {
+export const setAlignmentJustifyState = (state) => {
    return {
-      type: SET_STROKE,
+      type: SET_ALIGNMENT_JUSTIFY,
       state: state,
    };
 };

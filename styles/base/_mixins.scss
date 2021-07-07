@@ -52,15 +52,18 @@ body {
          flex-direction: row;
       }
       &--nav-h4 {
+         padding-left: 1.8rem;
          color: white;
          font-size: 2rem;
          padding-right: 2rem;
+
          font-weight: lighter;
       }
       &--nav-icon {
+         cursor: pointer;
          font-size: 3rem;
          color: white;
-         padding-right: 1rem;
+         padding-right: 2rem;
       }
    }
    .header-btn {
