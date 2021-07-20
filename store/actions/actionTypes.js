@@ -36,3 +36,4 @@ export const STROKE = "STROKE";
 export const STROKE_WIDTH = "STROKE_WIDTH";
 export const STROKE_COLOR = "STROKE_COLOR";
 export const SET_CURRENT_COLOR = "SET_CURRENT";
+export const IS_DIALOG = "IS_DIALOG";

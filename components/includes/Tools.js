@@ -15,11 +15,11 @@ const Tools = () => {
          radius: 40,
          fill: "black",
       });
+
       canvas.add(circle).setActiveObject(circle);
       canvas.centerObject(circle);
-      canvas.renderAll();
+      canvas.requestRenderAll();
    };
-
    const showLine = () => {
       var line = new fabric.Line([1, 1, 1], {
          top: 180,
@@ -59,54 +59,42 @@ const Tools = () => {
    return (
       <div className="sidebar-menu-side-tools">
          <div className="sidebar-menu-side-grid">
-            <span>
+            <span
+               onClick={() => {
+                  showCircle();
+               }}
+            >
                <i class="fas fa-circle"></i>
             </span>
-            {/* <img
-               onClick={() => {
-                 showCircle();
-                }}
-                src="https://img.icons8.com/ios-filled/40/000000/filled-circle.png"
-                className="sidebar-menu-side-grid-icon"
-              /> */}
          </div>
 
          <div className="sidebar-menu-side-grid">
-            <span>
-               <i class="fas fa-horizontal-rule"></i>
-            </span>
-            {/* <img
+            <span
                onClick={() => {
                   showLine();
                }}
-               src="https://img.icons8.com/ios-glyphs/50/000000/line.png"
-               className="sidebar-menu-side-grid-icon"
-            /> */}
+            >
+               <i class="fas fa-horizontal-rule"></i>
+            </span>
          </div>
 
          <div className="sidebar-menu-side-grid">
-            <span>
-               <i class="fas fa-rectangle-landscape"></i>
-            </span>
-            {/* <img
+            <span
                onClick={() => {
                   showRec();
                }}
-               src="https://img.icons8.com/ios-glyphs/50/000000/rectangle.png"
-               className="sidebar-menu-side-grid-icon"
-            /> */}
+            >
+               <i class="fas fa-rectangle-landscape"></i>
+            </span>
          </div>
          <div className="sidebar-menu-side-grid">
-            <span>
-               <i class="fas fa-triangle"></i>
-            </span>
-            {/* <img
+            <span
                onClick={() => {
                   showTriangle();
                }}
-               src="https://img.icons8.com/fluent-systems-filled/50/000000/triangle.png"
-               className="sidebar-menu-side-grid-icon"
-            /> */}
+            >
+               <i class="fas fa-triangle"></i>
+            </span>
          </div>
          <div className="sidebar-menu-side-grid">
             <span>

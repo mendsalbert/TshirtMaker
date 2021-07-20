@@ -249,6 +249,7 @@ body {
    }
 
    #canvas {
+      // outline: 1px solid red;
       background-image: url("/images/canvas-bg.png");
       background-repeat: no-repeat;
       background-size: contain;
@@ -489,6 +490,39 @@ hr {
 #file-input {
    display: none;
 }
+
+//***************************************
+//****STYLES FOR TOOLBAR
+.tools-container {
+   margin: 1rem;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   // padding-right: 1rem;
+}
+
+.vr {
+   margin-right: 1rem;
+   height: 5rem;
+   width: 0.1rem;
+   background-color: black;
+}
+.fill-container {
+   // width: 10rem;
+   margin-right: 1rem;
+   &-sub {
+      display: flex;
+      flex-direction: row;
+   }
+   &-text {
+      font-size: 1.4rem;
+   }
+   // text-align: center;
+}
+#text-stroke-width {
+   width: 8rem;
+}
+//***************************************
 @keyframes rainbow {
    0% {
       background-position: 0% 82%;
