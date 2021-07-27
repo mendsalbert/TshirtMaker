@@ -9,6 +9,8 @@ export const SET_TEXT_TOGGLE = "SET_TEXT_TOGGLE";
 //action types for index page
 export const LOAD_CANVAS_OBJECT = "LOAD_CANVAS_OBJECT";
 export const LOAD_CANVAS_REF = "LOAD_CANVAS_REF";
+export const LOAD_CANVAS_BACK = "LOAD_CANVAS_BACK";
+export const LOAD_CANVAS_BACK_REF = "LOAD_CANVAS_BACK_REF";
 
 //action types for Text component
 export const SET_STROKE = "SET_STROKE";

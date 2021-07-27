@@ -6,6 +6,7 @@ import * as textActions from "../../store/actions/text_actions";
 const Text = () => {
    const dispatch = useDispatch();
    const canvas = useSelector((state) => state.index.canvas);
+   // const canvas2 = useSelector((state) => state.index.canvasBack);
 
    const stroke = useSelector((state) => state.text.stroke);
    const fontSize = useSelector((state) => state.text.fontSize);
@@ -37,6 +38,7 @@ const Text = () => {
          fontWeight: "",
          // stroke: "black",
       });
+
       canvas.add(text).setActiveObject(text);
       canvas.centerObject(text);
       canvas.renderAll();

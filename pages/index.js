@@ -6,11 +6,15 @@ import Toolbar from "../components/Toolbar/Toolbar";
 import SideBar from "../components/Sidebar/SideBar";
 import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
+
 export default function index(props) {
    const ref = useSelector((state) => state.index.canvasRef);
    const dispatch = useDispatch();
+
    useEffect(() => {
-      dispatch(indexActions.loadCanvasObject());
+      if (typeof window === "object") {
+         dispatch(indexActions.loadCanvasObject());
+      }
    }, []);
    return (
       <>
