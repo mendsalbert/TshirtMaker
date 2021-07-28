@@ -42,6 +42,16 @@ const Text = () => {
       canvas.add(text).setActiveObject(text);
       canvas.centerObject(text);
       canvas.renderAll();
+
+      // canvas.on("object:added", function () {
+      //    if (!isRedoing) {
+      //       h = [];
+      //    }
+      //    isRedoing = false;
+      // });
+
+      // var isRedoing = false;
+      // var h = [];
    };
    useEffect(() => {
       initText();

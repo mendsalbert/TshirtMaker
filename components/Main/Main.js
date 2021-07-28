@@ -64,8 +64,8 @@ const Main = () => {
          <div>{displayMenu ? showSideMenu() : ""}</div>
          <canvas
             id="canvas"
-            width="450"
-            height="450"
+            width="500"
+            height="500"
             className="canvas"
             ref={canvasRef}
          />

@@ -1,25 +1,29 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import "fabric-history";
-// import "fabric";
+
 const Header = () => {
+   // const initHistory = () => {
+   // canvas.on("object:added", function () {
+   //    if (!isRedoing) {
+   //       h = [];
+   //    }
+   //    isRedoing = false;
+   // });
+
+   // var isRedoing = false;
+   // var h = [];
+   const canvas = useSelector((state) => state.index.canvas);
+
    // useEffect(() => {
-   // if (typeof window !== "undefined") {
-   // }
-   // }, []);
-
-   if (typeof window !== "undefined") {
-      const canvas = useSelector((state) => state.index.canvas);
-
       // canvas.on("object:added", function () {
       //    if (!isRedoing) {
       //       h = [];
       //    }
       //    isRedoing = false;
       // });
-   }
-   var isRedoing = false;
-   var h = [];
+      var isRedoing = false;
+      var h = [];
+   // }, []);
 
    const undoHandler = () => {
       if (canvas._objects.length > 0) {
@@ -57,11 +61,34 @@ const Header = () => {
                <i class="far fa-redo"></i>
             </span>
          </div>
-         <div className="header-nav_right">
-            <button className="header-btn">SHARE</button>
-            <button className="header-btn">
-               <span>[!]</span>DOWNLOAD
+         <div className="header--nav_right">
+            <button className="header-btn"><span><i class="fal fa-save"></i></span>SAVE</button>
+            <button className="header-btn" onClick={()=>{
+            //  canvas.deactivateAll().renderAll();  
+            
+            // fabric.Image.fromURL('/images/3dshirtshort.png', 
+            //    function(img) {
+            //       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+            //             scaleX: canvas.width / img.width,
+            //             scaleY: canvas.height / img.height
+            //          });
+            // },  { crossOrigin: 'Anonymous' });
+
+            function download() {
+             canvas.crossorigin="anonymous";
+             window.open(canvas.toDataURL('image/jpeg')); 
+               // var dt = canvas.toDataURL('image/jpeg');
+            
+               // this.href = dt;
+            };
+            //  canvas.renderAll();
+            download();
+
+            }}>
+               <span><i class="fal fa-arrow-circle-down"></i></span>DOWNLOAD
             </button>
+           
+            <span><i class="fad fa-share-square"></i></span>
          </div>
       </div>
    );

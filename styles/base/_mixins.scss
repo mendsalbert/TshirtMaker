@@ -61,7 +61,7 @@ body {
       }
       &--nav-icon {
          cursor: pointer;
-         font-size: 3rem;
+         font-size: 2rem;
          color: white;
          padding-right: 2rem;
       }
@@ -75,6 +75,16 @@ body {
       margin-right: 1rem;
       cursor: pointer;
       border-radius: 0.6rem;
+      & span {
+         padding-right: 0.8rem;
+         font-size: 1.5rem;
+      }
+   }
+   .header--nav_right {
+      & span {
+         cursor: pointer;
+         color: white;
+      }
    }
    //   CODE FOR TOOLBAR ***********************************************
    &--toolbar {
@@ -306,6 +316,7 @@ body {
    height: 3rem;
    border-radius: 50%;
    cursor: pointer;
+   border: 2px solid rgba(0, 0, 0, 0.336);
    //   margin-left: 2rem;
    //   padding-left: 1rem;
    &-black {

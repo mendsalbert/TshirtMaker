@@ -7,28 +7,28 @@ const Text = (props) => {
    const buttons = [
       {
          className: "shirt-colors shirt-colors-black",
-         urlShort: `url('/images/colors-front/short-black.png')`,
-         urlLong: `url('/images/colors-front/long-black.png')`,
+         urlShort: `url('/images/short-black.png')`,
+         urlLong: `url('/images/long-black.png')`,
       },
       {
          className: "shirt-colors shirt-colors-white",
-         urlShort: `url('/images/colors-front/short-white.png')`,
-         urlLong: `url('/images/colors-front/long-white.png')`,
+         urlShort: `url('/images/3dshirtshort.png')`,
+         urlLong: `url('/images/3dshirt.jpg.png')`,
       },
       {
          className: "shirt-colors shirt-colors-blueBlack",
-         urlShort: `url('/images/colors-front/short-blueBlack.png')`,
-         urlLong: `url('/images/colors-front/long-blueblack.png')`,
+         urlShort: `url('/images/short-blueBlack.png')`,
+         urlLong: `url('/images/long-blueBlack.png')`,
       },
       {
          className: "shirt-colors shirt-colors-pink",
-         urlShort: `url('/images/colors-front/short-pink.png')`,
-         urlLong: `url('/images/colors-front/long-pink.png')`,
+         urlShort: `url('/images/short-pink.png')`,
+         urlLong: `url('/images/long-pink.png')`,
       },
       {
          className: "shirt-colors shirt-colors-orange",
-         urlShort: `url('/images/colors-front/short-orange.png')`,
-         urlLong: `url('/images/colors-front/long-orange.png')`,
+         urlShort: `url('/images/short-orange.png')`,
+         urlLong: `url('/images/long-orange.png')`,
       },
    ];
    let shirtType = canvasContext.shirtType;
